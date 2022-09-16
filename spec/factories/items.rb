@@ -1,8 +1,9 @@
 FactoryBot.define do
-  factory :random_item, class: Item do
-    name        {Faker::Commerce.product_name}
+  factory :item, class: Item do
+    name        { SecureRandom.uuid }
     description {Faker::Marketing.buzzwords}
     unit_price  {Faker::Number.within(range: 500..2000)}
-    association :merchant, factory: :random_merchant
+    association :merchant, factory: :merchant
   end
 end
+
