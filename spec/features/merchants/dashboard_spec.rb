@@ -245,7 +245,7 @@ RSpec.describe 'Merchant Dashboard' do
       end
 
       it '' do
-
+        binding.pry
       end
 
       it '' do
