@@ -75,6 +75,12 @@ RSpec.describe 'admin invoice show page bulk discounts' do
       within "#total-discounted-revenue" do
         expect(page).to have_content(invoice_1.total_discounted_revenue)
       end
+
+      visit admin_invoice_path(invoice_2)
+      
+      within "#total-discounted-revenue" do
+        expect(page).to have_content(invoice_2.total_discounted_revenue)
+      end
     end
   end
 end
