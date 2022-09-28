@@ -8,8 +8,6 @@
 
   enum status: { "in progress": 0, completed: 1, cancelled: 2 }
 
-  scope :discount_threshold, -> { where(invoice_items.quantity >= bulk_discounts.threshold) }
-
   def self.unshipped_invoices
     joins(:invoice_items)
     .where.not(invoice_items: {status: 2})
@@ -47,7 +45,7 @@
   def discount_amount_merchant(merch_id)
     invoice_items.joins(:bulk_discounts)
     .where('invoice_items.quantity >= bulk_discounts.threshold AND bulk_discounts.merchant_id = ?', merch_id)
-    .select('invoice_items.*, max((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.discount) as discount')
+    .discount
     .group(:id)
     .sum(&:discount)
   end
@@ -59,15 +57,14 @@
   def total_discount
     invoice_items
     .joins(:bulk_discounts)
-    .where('invoice_items.quantity >= bulk_discounts.threshold')
-    .select('invoice_items.id, max((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.discount) as discount')
+    .threshold
+    .discount
     .group('invoice_items.id')
     .sum(&:discount)
   end
 
   def total_revenue
-    invoice_items
-    .sum('invoice_items.quantity * invoice_items.unit_price')
+    invoice_items.revenue
   end
 
   def total_discounted_revenue
