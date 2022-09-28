@@ -53,4 +53,12 @@
   def revenue_with_discount(merch_id)
     total_revenue_merchant(merch_id) - discount_amount_merchant(merch_id)
   end
+
+  def total_discounted_revenue
+    
+  end
+
+  def total_revenue
+    require 'pry'; binding.pry
+  end
 end
