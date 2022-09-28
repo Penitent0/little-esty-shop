@@ -195,5 +195,34 @@ RSpec.describe Invoice, type: :model do
         expect(invoice_1.discount_amount_merchant(merchant_2)).to eq(637.5)
       end
     end
+
+    describe 'total_revenue' do
+      it 'has total revenue of invoice regardless of transaction status' do
+        merchant_1 = create(:merchant)
+        merchant_2 = create(:merchant)
+  
+        item_1 = create(:item, merchant: merchant_1)
+        item_2 = create(:item, merchant: merchant_1)
+        item_3 = create(:item, merchant: merchant_1)
+  
+        item_4 = create(:item, merchant: merchant_2)
+        item_5 = create(:item, merchant: merchant_2)
+        item_6 = create(:item, merchant: merchant_2)
+  
+        invoice_1 = create(:invoice)
+        invoice_2 = create(:invoice)
+  
+        create(:invoice_items, invoice_id: invoice_1.id, item_id: item_1.id, unit_price: 100, quantity: 10) # 1000
+        create(:invoice_items, invoice_id: invoice_1.id, item_id: item_2.id, unit_price: 200, quantity: 20) # 4000
+        create(:invoice_items, invoice_id: invoice_1.id, item_id: item_3.id, unit_price: 150, quantity: 5) # 750
+  
+        create(:invoice_items, invoice_id: invoice_2.id, item_id: item_4.id, unit_price: 50, quantity: 5) # 250
+        create(:invoice_items, invoice_id: invoice_2.id, item_id: item_5.id, unit_price: 75, quantity: 15) # 1125
+        create(:invoice_items, invoice_id: invoice_2.id, item_id: item_6.id, unit_price: 15, quantity: 10) # 150
+
+        expect(invoice_1.total_revenue).to eq(5750)
+        expect(invoice_2.total_revenue).to eq(1525)
+      end
+    end
   end
 end
