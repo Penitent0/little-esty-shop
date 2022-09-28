@@ -53,4 +53,22 @@
   def revenue_with_discount(merch_id)
     total_revenue_merchant(merch_id) - discount_amount_merchant(merch_id)
   end
+
+  def total_discount
+    invoice_items
+    .joins(:bulk_discounts)
+    .where('invoice_items.quantity >= bulk_discounts.threshold')
+    .select('invoice_items.id, max((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.discount) as discount')
+    .group('invoice_items.id')
+    .sum(&:discount)
+  end
+
+  def total_revenue
+    invoice_items
+    .sum('invoice_items.quantity * invoice_items.unit_price')
+  end
+
+  def total_discounted_revenue
+    total_revenue - total_discount
+  end
 end

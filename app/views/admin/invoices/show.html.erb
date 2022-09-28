@@ -1,5 +1,12 @@
 <%= render partial: 'admin/header' %>
 
+<div id="total-revenue">
+  <p>Total Revenue: <%= @invoice.total_revenue %></p>
+</div>
+
+<div id="total-discounted-revenue">
+  <p>Total Discounted Revenue: <%= @invoice.total_discounted_revenue %></p>
+</div>
 
 <div id="invoice-details-<%= @invoice.id %>">
   <p>Invoice #<%= @invoice.id %></p>
