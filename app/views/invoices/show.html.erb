@@ -2,15 +2,15 @@
 
 
 <div id="invoice-revenue">
-  <p>Total Invoice Revenue: <%= @invoice.items.total_revenue_of_all_items %></p>
+  <p>Total Invoice Revenue: <%= number_to_currency((@invoice.items.total_revenue_of_all_items)/100.00) %></p>
 </div>
 
 <div id="invoice-merchant-revenue">
-  <p>Total Merchant Invoice Revenue: <%= @invoice.total_revenue_merchant(@merchant.id)  %></p>
+  <p>Total Merchant Invoice Revenue: <%= number_to_currency((@invoice.total_revenue_merchant(@merchant.id))/100.00) %></p>
 </div>
 
 <div id="invoice-discounted-revenue">
-  <p>Total Merchant Invoice Discounted Revenue: <%= @invoice.revenue_with_discount(@merchant.id) %></p> 
+  <p>Total Merchant Invoice Discounted Revenue: <%= number_to_currency((@invoice.revenue_with_discount(@merchant.id))/100.00) %></p> 
 </div>
 
 <div id="invoice-info">

@@ -251,7 +251,7 @@ RSpec.describe 'Merchant Dashboard - Bulk Discounts' do
       end
 
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_2))
-
+      
       expect(page).to_not have_content(@bulk_discount_4.discount)
       expect(page).to_not have_content(@bulk_discount_4.threshold)
     end

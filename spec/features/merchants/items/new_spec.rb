@@ -38,5 +38,14 @@ RSpec.describe "Merchant Item Create New" do
         expect(page).to have_content("Hat")
       end
     end
+
+    it 'has testing for sad path' do
+      visit new_merchant_item_path(@merchant_1)
+
+      click_on "Create Item"
+
+      expect(page).to have_content("Name can't be blank, Description can't be blank, Unit price can't be blank, and Unit price is not a number")
+      expect(page).to have_button('Create Item')
+    end
   end
 end

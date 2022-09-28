@@ -189,25 +189,25 @@ RSpec.describe 'Merchant Invoice Show Page' do
       visit merchant_invoice_path(merchant_1, invoice_1)
       
       within "#invoice-revenue" do
-        expect(page).to have_content(invoice_1.items.total_revenue_of_all_items)
+        expect(page).to have_content((invoice_1.items.total_revenue_of_all_items.round/100.00).to_s(:delimited))
       end
 
       visit merchant_invoice_path(merchant_1, invoice_2)
 
       within "#invoice-revenue" do
-        expect(page).to have_content(invoice_2.items.total_revenue_of_all_items)
+        expect(page).to have_content((invoice_2.items.total_revenue_of_all_items.round/100.00).to_s(:delimited))
       end
 
       visit merchant_invoice_path(merchant_1, invoice_3)
 
       within "#invoice-revenue" do
-        expect(page).to have_content(invoice_3.items.total_revenue_of_all_items)
+        expect(page).to have_content((invoice_3.items.total_revenue_of_all_items.round/100.00).to_s(:delimited))
       end
 
       visit merchant_invoice_path(merchant_1, invoice_4)
 
       within "#invoice-revenue" do
-        expect(page).to have_content(invoice_4.items.total_revenue_of_all_items)
+        expect(page).to have_content((invoice_4.items.total_revenue_of_all_items.round/100.00).to_s(:delimited))
       end
     end
   end

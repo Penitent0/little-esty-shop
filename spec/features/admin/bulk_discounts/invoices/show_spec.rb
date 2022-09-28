@@ -34,13 +34,13 @@ RSpec.describe 'admin invoice show page bulk discounts' do
       visit admin_invoice_path(invoice_1)
       
       within "#total-revenue" do
-        expect(page).to have_content(invoice_1.total_revenue)
+        expect(page).to have_content((invoice_1.total_revenue.round/100.00).to_s(:delimited))
       end
 
       visit admin_invoice_path(invoice_2)
 
       within "#total-revenue" do
-        expect(page).to have_content(invoice_2.total_revenue)
+        expect(page).to have_content((invoice_2.total_revenue.round/100.00).to_s(:delimited))
       end
     end
 
@@ -73,13 +73,13 @@ RSpec.describe 'admin invoice show page bulk discounts' do
       visit admin_invoice_path(invoice_1)
       
       within "#total-discounted-revenue" do
-        expect(page).to have_content(invoice_1.total_discounted_revenue)
+        expect(page).to have_content((invoice_1.total_discounted_revenue.round/100.00).to_s(:delimited))
       end
 
       visit admin_invoice_path(invoice_2)
       
       within "#total-discounted-revenue" do
-        expect(page).to have_content(invoice_2.total_discounted_revenue)
+        expect(page).to have_content((invoice_2.total_discounted_revenue.round/100.00).to_s(:delimited))
       end
     end
   end
