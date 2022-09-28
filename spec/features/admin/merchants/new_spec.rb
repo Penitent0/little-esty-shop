@@ -23,6 +23,15 @@ RSpec.describe "Admin Merchant Create New" do
         end
         
       end
+
+      it 'has sad path testing' do
+        visit new_admin_merchant_path
+
+        click_button "Create Merchant"
+
+        expect(page).to have_content("Name can't be blank")
+        expect(page).to have_button("Create Merchant")
+      end
     end
   end
 end

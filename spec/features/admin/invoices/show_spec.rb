@@ -67,6 +67,7 @@ RSpec.describe "Admin Invoice Show Page" do
         visit admin_invoice_path(@invoice_1)
         select 'In Progress', from: 'Invoice Status'
         click_button "Update Invoice"
+        expect(page).to have_content("Invoice ##{@invoice_1.id} was successfully updated")
         expect(current_path).to eq(admin_invoice_path(@invoice_1))
         expect(page).to have_content("In Progress")
       end

@@ -1,4 +1,4 @@
-<h2>Invoice Id: <%= @invoice.id %> Show Page TESTING </h2>
+<h2>Invoice Id: <%= @invoice.id %> Show Page </h2>
 
 
 <div id="invoice-revenue">
@@ -10,7 +10,7 @@
 </div>
 
 <div id="invoice-discounted-revenue">
-  <p>Total Merchant Invoice Discounted Revenue: <%= number_to_currency((@invoice.revenue_with_discount(@merchant.id))/100.00) %></p> 
+  <p>Total Merchant Invoice Revenue with Discounts: <%= number_to_currency((@invoice.revenue_with_discount(@merchant.id))/100.00) %></p> 
 </div>
 
 <div id="invoice-info">
