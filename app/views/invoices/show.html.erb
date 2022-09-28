@@ -1,11 +1,16 @@
 <h2>Invoice Id: <%= @invoice.id %> Show Page </h2>
 
+
 <div id="invoice-revenue">
   <p>Total Invoice Revenue: <%= @invoice.items.total_revenue_of_all_items %></p>
 </div>
 
+<div id="invoice-merchant-revenue">
+  <p> Total Merchant Invoice Revenue: <%= @invoice.total_revenue_merchant(@merchant.id)  %></p>
+</div>
+
 <div id="invoice-discounted-revenue">
-  <p>Total Invoice Discounted Revenue: <%= @invoice.discount_revenue %></p> 
+  <p> Total Merchant Invoice Discounted Revenue: <%= @invoice.revenue_with_discount(@merchant.id) %></p> 
 </div>
 
 <div id="invoice-info">
@@ -21,6 +26,7 @@
     <p>Item Price: <%= item.unit_price %></p>
     <p>Item Quantity: <%= item.quantity_purchased(@invoice.id) %></p>
     <p>Item Shipping Status: <%= item.shipping_status(@invoice.id) %>  </p>
+
     <%= form_with model: [@merchant, @invoice], local: true do |form| %>
       <%= form.label :item_id %>
       <%= form.hidden_field :item_id, value: "#{item.id}" %>
@@ -28,6 +34,11 @@
       <%= form.select :status, [["Pending", :pending], ["Packaged", :packaged], ["Shipped", :shipped]], selected: "#{item.shipping_status(@invoice.id)}" %>
       <%= form.submit "Update Item Status" %>
     <% end %>
+    <br>
+    <% if item.applied_discount(item.id) != nil %>
+      <%= link_to "#{item.name} Bulk Discount Page", merchant_bulk_discount_path(@merchant, item.applied_discount(item.id)) %>
+    <% end %>
+    
   <% end %>
 </div>
 
