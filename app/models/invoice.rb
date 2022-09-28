@@ -8,6 +8,8 @@
 
   enum status: { "in progress": 0, completed: 1, cancelled: 2 }
 
+  scope :discount_threshold, -> { where(invoice_items.quantity >= bulk_discounts.threshold) }
+
   def self.unshipped_invoices
     joins(:invoice_items)
     .where.not(invoice_items: {status: 2})

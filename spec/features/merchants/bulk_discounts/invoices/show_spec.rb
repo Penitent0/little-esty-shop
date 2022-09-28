@@ -37,13 +37,13 @@ RSpec.describe 'merchant invoice show page bulk discounts' do
       visit merchant_invoice_path(@merchant_1, @invoice_1)
 
       within "#invoice-merchant-revenue" do
-        expect(page).to have_content(@invoice_1.total_revenue_merchant(@merchant_1.id))
+        expect(page).to have_content((@invoice_1.total_revenue_merchant(@merchant_1.id).round/100.00).to_s(:delimited))
       end
 
       visit merchant_invoice_path(@merchant_2, @invoice_1)
       
       within "#invoice-merchant-revenue"  do
-        expect(page).to have_content(@invoice_1.total_revenue_merchant(@merchant_2.id))
+        expect(page).to have_content((@invoice_1.total_revenue_merchant(@merchant_2.id).round/100.00).to_s(:delimited))
       end
     end
 
@@ -51,13 +51,13 @@ RSpec.describe 'merchant invoice show page bulk discounts' do
       visit merchant_invoice_path(@merchant_1, @invoice_1)
 
       within "#invoice-discounted-revenue" do
-        expect(page).to have_content(@invoice_1.revenue_with_discount(@merchant_1.id))
+        expect(page).to have_content((@invoice_1.revenue_with_discount(@merchant_1.id).round/100.00).to_s(:delimited))
       end
 
       visit merchant_invoice_path(@merchant_2, @invoice_1)
 
       within "#invoice-discounted-revenue" do
-        expect(page).to have_content(@invoice_1.revenue_with_discount(@merchant_2.id))
+        expect(page).to have_content((@invoice_1.revenue_with_discount(@merchant_2.id).round/100.00).to_s(:delimited))
       end
     end
   end

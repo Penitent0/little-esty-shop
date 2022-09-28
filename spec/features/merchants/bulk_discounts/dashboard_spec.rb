@@ -54,22 +54,16 @@ RSpec.describe 'Merchant Dashboard - Bulk Discounts' do
       within "#bulk-discount-#{@bulk_discount_1.id}" do
         expect(page).to have_content(@bulk_discount_1.discount)
         expect(page).to have_content(@bulk_discount_1.threshold)
-        expect(page).to_not have_content(@bulk_discount_4.discount)
-        expect(page).to_not have_content(@bulk_discount_4.threshold)
       end
 
       within "#bulk-discount-#{@bulk_discount_2.id}" do
         expect(page).to have_content(@bulk_discount_2.discount)
         expect(page).to have_content(@bulk_discount_2.threshold)
-        expect(page).to_not have_content(@bulk_discount_5.discount)
-        expect(page).to_not have_content(@bulk_discount_5.threshold)
       end
 
       within "#bulk-discount-#{@bulk_discount_3.id}" do
         expect(page).to have_content(@bulk_discount_3.discount)
         expect(page).to have_content(@bulk_discount_3.threshold)
-        expect(page).to_not have_content(@bulk_discount_4.discount)
-        expect(page).to_not have_content(@bulk_discount_4.threshold)
       end
 
       visit merchant_bulk_discounts_path(@merchant_2)
@@ -77,22 +71,16 @@ RSpec.describe 'Merchant Dashboard - Bulk Discounts' do
       within "#bulk-discount-#{@bulk_discount_4.id}" do
         expect(page).to have_content(@bulk_discount_4.discount)
         expect(page).to have_content(@bulk_discount_4.threshold)
-        expect(page).to_not have_content(@bulk_discount_3.discount)
-        expect(page).to_not have_content(@bulk_discount_3.threshold)
       end
 
       within "#bulk-discount-#{@bulk_discount_5.id}" do
         expect(page).to have_content(@bulk_discount_5.discount)
         expect(page).to have_content(@bulk_discount_5.threshold)
-        expect(page).to_not have_content(@bulk_discount_2.discount)
-        expect(page).to_not have_content(@bulk_discount_2.threshold)
       end
 
       within "#bulk-discount-#{@bulk_discount_6.id}" do
         expect(page).to have_content(@bulk_discount_6.discount)
         expect(page).to have_content(@bulk_discount_6.threshold)
-        expect(page).to_not have_content(@bulk_discount_1.discount)
-        expect(page).to_not have_content(@bulk_discount_1.threshold)
       end
     end
 
@@ -192,6 +180,22 @@ RSpec.describe 'Merchant Dashboard - Bulk Discounts' do
       expect(page).to have_content("Discount: 0.15")
       expect(page).to have_content("Threshold: 100")
     end
+
+    it 'has sad path testing' do
+      visit new_merchant_bulk_discount_path(@merchant_1)
+
+      click_on "Create New Discount"
+
+      expect(page).to have_content("Discount can't be blank and Threshold can't be blank")
+      expect(page).to have_button("Create New Discount")
+
+      visit new_merchant_bulk_discount_path(@merchant_2)
+
+      click_on "Create New Discount"
+
+      expect(page).to have_content("Discount can't be blank and Threshold can't be blank")
+      expect(page).to have_button("Create New Discount")
+    end
   end
 
   # As a merchant
@@ -251,7 +255,7 @@ RSpec.describe 'Merchant Dashboard - Bulk Discounts' do
       end
 
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_2))
-
+      
       expect(page).to_not have_content(@bulk_discount_4.discount)
       expect(page).to_not have_content(@bulk_discount_4.threshold)
     end

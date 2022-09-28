@@ -39,7 +39,7 @@ RSpec.describe "Admin Invoice Show Page" do
       it "I see all of the items on the invoice including: Item name, quantity ordered, price Item sold for, Item status" do
         visit admin_invoice_path(@invoice_1)
 
-         within("#invoice-items") do
+        within("#invoice-items") do
           @invoice_1.items.each do |item|
             expect(page).to have_content(item.name)
             expect(page).to have_content(item.quantity_purchased(@invoice_1.id))
@@ -67,6 +67,7 @@ RSpec.describe "Admin Invoice Show Page" do
         visit admin_invoice_path(@invoice_1)
         select 'In Progress', from: 'Invoice Status'
         click_button "Update Invoice"
+        expect(page).to have_content("Invoice ##{@invoice_1.id} was successfully updated")
         expect(current_path).to eq(admin_invoice_path(@invoice_1))
         expect(page).to have_content("In Progress")
       end
@@ -86,7 +87,6 @@ RSpec.describe "Admin Invoice Show Page" do
           expect(page).to_not have_content((@invoice_1.total_revenue_of_invoice/100.00).to_s(:delimited))
         end
       end
-
     end
   end
 end

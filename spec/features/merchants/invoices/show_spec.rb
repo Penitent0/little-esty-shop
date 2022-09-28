@@ -118,24 +118,26 @@ RSpec.describe 'Merchant Invoice Show Page' do
     end
 
     it 'When I click this select field, select a new status, click button I am taken back to merchant invoice show page' do
-      visit  merchant_invoice_path(@merchant_1, @invoice_1)
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
 
       select "Shipped", from: "invoice[status]"
 
       click_button "Update Item Status"
-
+      
       expect(current_path).to eq( merchant_invoice_path(@merchant_1, @invoice_1))
+
       within "#invoice-items-info" do
         expect(page).to have_content("Shipped")
       end
 
-      visit  merchant_invoice_path(@merchant_2, @invoice_2)
+      visit merchant_invoice_path(@merchant_2, @invoice_2)
 
       select "Packaged", from: "invoice[status]"
 
       click_button "Update Item Status"
 
       expect(current_path).to eq( merchant_invoice_path(@merchant_2, @invoice_2))
+  
       within "#invoice-items-info" do
         expect(page).to have_content("Packaged")
       end
@@ -189,25 +191,25 @@ RSpec.describe 'Merchant Invoice Show Page' do
       visit merchant_invoice_path(merchant_1, invoice_1)
       
       within "#invoice-revenue" do
-        expect(page).to have_content(invoice_1.items.total_revenue_of_all_items)
+        expect(page).to have_content((invoice_1.items.total_revenue_of_all_items.round/100.00).to_s(:delimited))
       end
 
       visit merchant_invoice_path(merchant_1, invoice_2)
 
       within "#invoice-revenue" do
-        expect(page).to have_content(invoice_2.items.total_revenue_of_all_items)
+        expect(page).to have_content((invoice_2.items.total_revenue_of_all_items.round/100.00).to_s(:delimited))
       end
 
       visit merchant_invoice_path(merchant_1, invoice_3)
 
       within "#invoice-revenue" do
-        expect(page).to have_content(invoice_3.items.total_revenue_of_all_items)
+        expect(page).to have_content((invoice_3.items.total_revenue_of_all_items.round/100.00).to_s(:delimited))
       end
 
       visit merchant_invoice_path(merchant_1, invoice_4)
 
       within "#invoice-revenue" do
-        expect(page).to have_content(invoice_4.items.total_revenue_of_all_items)
+        expect(page).to have_content((invoice_4.items.total_revenue_of_all_items.round/100.00).to_s(:delimited))
       end
     end
   end
